@@ -124,4 +124,16 @@ class FileCollectionTest extends TestCase
         $collection = new FileCollection(self::FILENAME);
         $this->assertEquals($collection->get('index'), 'value');
     }
+
+    /**
+     * @test
+     * @depends dataCanBeAdded
+     */
+    public function dataShouldExpire()
+    {
+        $collection = new FileCollection(self::FILENAME);
+        $collection->set('index', 'value', time() + 1);
+        sleep(2);
+        $this->assertEquals($collection->get('index'), null);
+    }
 }
