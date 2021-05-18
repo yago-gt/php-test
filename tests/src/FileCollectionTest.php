@@ -6,16 +6,11 @@ use PHPUnit\Framework\TestCase;
 
 class FileCollectionTest extends TestCase
 {
-    private string $filename;
-
-    protected function setUp(): void
-    {
-        $this->filename = "test.collection";
-    }
+    const FILENAME = "test.collection";
 
     protected function tearDown(): void
     {
-        unlink($this->filename);
+        unlink(self::FILENAME);
     }
 
     /**
@@ -24,7 +19,7 @@ class FileCollectionTest extends TestCase
      */
     public function objectCanBeConstructed()
     {
-        $collection = new FileCollection($this->filename);
+        $collection = new FileCollection(self::FILENAME);
         return $collection;
     }
 
@@ -35,7 +30,7 @@ class FileCollectionTest extends TestCase
      */
     public function dataCanBeAdded()
     {
-        $collection = new FileCollection($this->filename);
+        $collection = new FileCollection(self::FILENAME);
         $collection->set('index1', 'value');
         $collection->set('index2', 5);
         $collection->set('index3', true);
@@ -49,7 +44,7 @@ class FileCollectionTest extends TestCase
      */
     public function dataCanBeRetrieved()
     {
-        $collection = new FileCollection($this->filename);
+        $collection = new FileCollection(self::FILENAME);
         $collection->set('index1', 'value');
 
         $this->assertEquals('value', $collection->get('index1'));
@@ -61,7 +56,7 @@ class FileCollectionTest extends TestCase
      */
     public function inexistentIndexShouldReturnDefaultValue()
     {
-        $collection = new FileCollection($this->filename);
+        $collection = new FileCollection(self::FILENAME);
 
         $this->assertNull($collection->get('index1'));
         $this->assertEquals('defaultValue', $collection->get('index1', 'defaultValue'));
@@ -73,7 +68,7 @@ class FileCollectionTest extends TestCase
      */
     public function newCollectionShouldNotContainItems()
     {
-        $collection = new FileCollection($this->filename);
+        $collection = new FileCollection(self::FILENAME);
         $this->assertEquals(0, $collection->count());
     }
 
@@ -83,7 +78,7 @@ class FileCollectionTest extends TestCase
      */
     public function collectionWithItemsShouldReturnValidCount()
     {
-        $collection = new FileCollection($this->filename);
+        $collection = new FileCollection(self::FILENAME);
         $collection->set('index1', 'value');
         $collection->set('index2', 5);
         $collection->set('index3', true);
@@ -97,7 +92,7 @@ class FileCollectionTest extends TestCase
      */
     public function collectionCanBeCleaned()
     {
-        $collection = new FileCollection($this->filename);
+        $collection = new FileCollection(self::FILENAME);
         $collection->set('index', 'value');
         $this->assertEquals(1, $collection->count());
 
@@ -111,7 +106,7 @@ class FileCollectionTest extends TestCase
      */
     public function addedItemShouldExistInCollection()
     {
-        $collection = new FileCollection($this->filename);
+        $collection = new FileCollection(self::FILENAME);
         $collection->set('index', 'value');
 
         $this->assertTrue($collection->has('index'));
@@ -123,10 +118,10 @@ class FileCollectionTest extends TestCase
      */
     public function dataShouldBePersistent()
     {
-        $collection = new FileCollection($this->filename);
+        $collection = new FileCollection(self::FILENAME);
         $collection->set('index', 'value');
 
-        $collection = new FileCollection($this->filename);
+        $collection = new FileCollection(self::FILENAME);
         $this->assertEquals($collection->get('index'), 'value');
     }
 }
