@@ -4,17 +4,28 @@ namespace Live\Collection;
 
 /**
  * File Collection
- * 
+ *
  * @package Live\Collection
  */
 class FileCollection implements CollectionInterface
 {
+    /**
+     * Default expiration time of set
+     */
     const DEFAULT_TIME = 3600;
 
     /**
-     * Collection file path
+     * Collection file descriptor
+     *
+     * @var resource
      */
-    protected $file, $data;
+    protected $file;
+    /**
+     * Collection data
+     *
+     * @var array
+     */
+    protected $data;
 
     /**
      * Save data to disk

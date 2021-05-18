@@ -9,6 +9,9 @@ namespace Live\Collection;
  */
 class MemoryCollection implements CollectionInterface
 {
+    /**
+     * Default expiration time of set
+     */
     const DEFAULT_TIME = 3600;
 
     /**
