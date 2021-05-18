@@ -9,6 +9,8 @@ namespace Live\Collection;
  */
 class MemoryCollection implements CollectionInterface
 {
+    const DEFAULT_TIME = 3600;
+
     /**
      * Collection data
      *
@@ -33,15 +35,25 @@ class MemoryCollection implements CollectionInterface
             return $defaultValue;
         }
 
-        return $this->data[$index];
+        [$value, $time] = $this->data[$index];
+
+        if ($time <= time()) {
+            return $defaultValue;
+        }
+
+        return $value;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function set(string $index, $value)
+    public function set(string $index, $value, int $time = null)
     {
-        $this->data[$index] = $value;
+        if ($time === null) {
+            $time = time() + self::DEFAULT_TIME;
+        }
+
+        $this->data[$index] = [$value, $time];
     }
 
     /**
